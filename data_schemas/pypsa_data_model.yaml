@@ -61,14 +61,14 @@ summary:
     anchored to the network's shared dimensions. The attribute schema is declared in 
     CSV files and is currently being migrated to Pydantic and Pandera for a stricter 
     validation. The underlying data can be accessed through different interfaces, such 
-    as the xarray accessor which provides n-dimensional arrays that naturally align
-    component, time, and scenario dimensions, particularly useful for formulating the 
-    problem.
+    as an xarray accessor which exposes labeled N-dimensional arrays with named
+    dimensions that enable automatic alignment, broadcasting, and index-based selection
+    across the full parameter space.
     
   modeling_domains_supported: |
-    - Economic dispatch (ED) with unit commitment (MILP or relaxed LP),
-      renewable availability, storage incl. hydro reservoirs, elastic
-      demands, and carrier conversion
+    - Economic dispatch (ED) with integer and/or continuous unit commitment
+      formulations, renewable availability, storage incl. hydro reservoirs,
+      demand elasticity, and carrier conversion
     - Linear optimal power flow (LOPF) for meshed AC-DC networks with
       optional loss approximations
     - Security-constrained LOPF (SCLOPF) with N-1 contingency analysis
@@ -76,11 +76,15 @@ summary:
       investment decisions for generation, storage, conversion, and
       transmission
     - Pathway planning with co-optimised multi-period investment
-    - Multi-energy sector coupling (electricity, heat, hydrogen, gas, etc.)
-    - Static non-linear and linearised AC/DC power flow (Newton-Raphson)
+    - Multi-carrier energy sector coupling (electricity, heat, hydrogen, gas, etc.)
+    - Static non-linear AC/DC (Newton-Raphson) and linearised power flow
+      approximation
     Various solution methods are supported across these domains, including
-    stochastic programming (with CVaR), MGA, rolling horizon, and spatial
-    and temporal clustering.
+    stochastic programming (risk-neutral and risk-averse CVaR formulations),
+    Modeling to Generate Alternatives (MGA), rolling-horizon foresight
+    optimisation, and optimization problem reduction techniques such as
+    spatial clustering and temporal clustering (representative periods,
+    segmentation).
 
   what_does_it_NOT_cover: |
     PyPSA is designed from an economical and operational research
@@ -99,14 +103,14 @@ summary:
 
   data_captured: |
     - Grid topology (buses, lines, transformers, links)
-    - Components (generators, loads, stores, storage units, shunt impedances)
+    - Component attributes (generators, loads, stores, storage units, shunt
+      impedances) — each carrying technical, economic, and operational parameters
+      as defined in the attribute schema
     - Time series (availability profiles, load profiles, marginal costs, snapshot weightings)
     - Scenarios (network level dimension for stochastic programming, adding a scenario
       axis to the full component data)
     - Investment periods (network level dimension for multi-period planning, with
       per-period weightings, discount rates, and lifetimes)
-    - Investment costs (capital cost, overnight cost, FOM)
-    - Operating constraints (ramp rates, min up/down times, unit commitment parameters)
     - Energy carriers and CO2 emissions, global constraints (e.g. CO2 budgets)
     - Standard type libraries for lines and transformers
     - Geographic coordinates and shapes for spatial analysis
@@ -215,10 +219,11 @@ usage:
     50–250 nodes. Hourly resolution, multi-period pathway optimisation.
     Data from OpenStreetMap (grid), ERA5/SARAH-3 (renewables), ENTSO-E
     (demand), Danish Energy Agency (costs).
-    PyPSA-Earth extends the same workflow globally and could be already bigger. 
+    PyPSA-Earth extends geographic coverage globally with workflows available
+    for nearly every country on Earth.
 
   who_is_using_it:
-    - See https://docs.pypsa.org/latest/home/users/
+    - We lost track of that. For known users, see https://docs.pypsa.org/latest/home/users/
 
   data_available:
     - geographic_area: International
